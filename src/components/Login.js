@@ -21,21 +21,21 @@ const Login = () => {
   const password = useRef(null);
 
   const handleButtonClick = () => {
-    const message = checkValidData(email.current.value, password.current.value);
-    setErrorMessage(message);
-    if (message) return;
-
     if (!isSignInForm) {
       // Sign Up Logic
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
+      const nameValue = name.current ? name.current.value : "";
+      const emailValue = email.current.value;
+      const passwordValue = password.current.value;
+      console.log(emailValue);
+      const message = checkValidData(nameValue, emailValue, passwordValue);
+      setErrorMessage(message);
+      if (message) return;
+
+      createUserWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
           const user = userCredential.user;
           updateProfile(user, {
-            displayName: name.current.value,
+            displayName: nameValue,
             photoURL: USER_AVATAR,
           })
             .then(() => {
@@ -60,11 +60,9 @@ const Login = () => {
         });
     } else {
       // sign in
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
+      const emailValue = email.current.value;
+      const passwordValue = password.current.value;
+      signInWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
