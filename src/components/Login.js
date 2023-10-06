@@ -26,7 +26,6 @@ const Login = () => {
       const nameValue = name.current ? name.current.value : "";
       const emailValue = email.current.value;
       const passwordValue = password.current.value;
-      console.log(emailValue);
       const message = checkValidData(nameValue, emailValue, passwordValue);
       setErrorMessage(message);
       if (message) return;
